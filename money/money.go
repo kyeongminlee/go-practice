@@ -29,7 +29,12 @@ func Franc(price int) *Money {
 	}
 }
 
-func (m Money) Add(money Money) *Money {
+func (m *Money) Times(multiplier int) *Money {
+	m.Price *= multiplier
+	return m
+}
+
+func (m *Money) Add(money Money) *Money {
 	if m.Currency == money.Currency && m.Currency != "" {
 		return &Money{
 			Price:    m.Price + money.Price,
@@ -40,7 +45,7 @@ func (m Money) Add(money Money) *Money {
 	return nil
 }
 
-func (m Money) IsEqualPrice(money Money) bool {
+func (m *Money) IsEqualPrice(money Money) bool {
 	if m.Currency == money.Currency && m.Currency != "" {
 		return m.Price == money.Price
 	}

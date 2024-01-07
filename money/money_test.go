@@ -5,6 +5,55 @@ import (
 	"testing"
 )
 
+func TestTimesMoney(t *testing.T) {
+	tests := []struct {
+		description string
+		money       *Money
+		multiplier  int
+		expected    *Money
+		expectedErr error
+	}{
+		{
+			description: "Money 5 * 2",
+			money:       Dollar(5),
+			multiplier:  2,
+			expected:    &Money{Price: 10, Currency: DollarString},
+			expectedErr: nil,
+		},
+		{
+			description: "Money 5 * 3",
+			money:       Dollar(5),
+			multiplier:  3,
+			expected:    &Money{Price: 15, Currency: DollarString},
+			expectedErr: nil,
+		},
+		{
+			description: "Franc 5 * 2",
+			money:       Franc(5),
+			multiplier:  2,
+			expected:    &Money{Price: 10, Currency: FrancString},
+			expectedErr: nil,
+		},
+		{
+			description: "Franc 5 * 3",
+			money:       Franc(5),
+			multiplier:  3,
+			expected:    &Money{Price: 15, Currency: FrancString},
+			expectedErr: nil,
+		},
+	}
+
+	for _, test := range tests {
+		t.Run(test.description, func(t *testing.T) {
+			result := test.money.Times(test.multiplier)
+
+			if !reflect.DeepEqual(result, test.expected) {
+				t.Errorf("Expected %v, but got %v", test.expected, result)
+			}
+		})
+	}
+}
+
 func TestAddMoney(t *testing.T) {
 	tests := []struct {
 		description string
