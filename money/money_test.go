@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-func TestMultipleMoney(t *testing.T) {
+func TestAddMoney(t *testing.T) {
 	tests := []struct {
 		description string
 		firstMoney  *Money
@@ -14,28 +14,28 @@ func TestMultipleMoney(t *testing.T) {
 		expectedErr error
 	}{
 		{
-			description: "Money 3 * 5",
+			description: "Money 3 + 5",
 			firstMoney:  Dollar(5),
 			secondMoney: Dollar(3),
-			expected:    &Money{Price: 15, Currency: DollarString},
+			expected:    &Money{Price: 8, Currency: DollarString},
 			expectedErr: nil,
 		},
 		{
-			description: "Money 7 * 2",
+			description: "Money 7 + 2",
 			firstMoney:  Dollar(7),
 			secondMoney: Dollar(2),
-			expected:    &Money{Price: 14, Currency: DollarString},
+			expected:    &Money{Price: 9, Currency: DollarString},
 			expectedErr: nil,
 		},
 		{
-			description: "Money 1 * 3",
+			description: "Money 1 + 3",
 			firstMoney:  Franc(1),
 			secondMoney: Franc(3),
-			expected:    &Money{Price: 3, Currency: FrancString},
+			expected:    &Money{Price: 4, Currency: FrancString},
 			expectedErr: nil,
 		},
 		{
-			description: "Money 0 * 100",
+			description: "can't not add another currency",
 			firstMoney:  Dollar(3),
 			secondMoney: Franc(4),
 			expected:    nil,
@@ -45,7 +45,7 @@ func TestMultipleMoney(t *testing.T) {
 
 	for _, test := range tests {
 		t.Run(test.description, func(t *testing.T) {
-			result := test.firstMoney.Multiple(*test.secondMoney)
+			result := test.firstMoney.Add(*test.secondMoney)
 
 			if !reflect.DeepEqual(result, test.expected) {
 				t.Errorf("Expected %v, but got %v", test.expected, result)

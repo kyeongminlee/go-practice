@@ -29,10 +29,10 @@ func Franc(price int) *Money {
 	}
 }
 
-func (m Money) Multiple(money Money) *Money {
+func (m Money) Add(money Money) *Money {
 	if m.Currency == money.Currency && m.Currency != "" {
 		return &Money{
-			Price:    m.Price * money.Price,
+			Price:    m.Price + money.Price,
 			Currency: m.Currency,
 		}
 	}
